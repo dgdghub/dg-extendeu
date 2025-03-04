@@ -253,6 +253,7 @@ def get_servers(sess_id: str, session: requests.session) -> {}:
     f = session.get(url=url, headers=headers)
     f.raise_for_status()
     soup = BeautifulSoup(f.text, "html.parser")
+    print(f"soup text: {soup.prettify()}")
     for tr in soup.select(
         "#kc2_order_customer_orders_tab_content_1 .kc2_order_table.kc2_content_table tr"
     ):
@@ -263,7 +264,7 @@ def get_servers(sess_id: str, session: requests.session) -> {}:
             True
             if tr.select(".td-z1-sp2-kc .kc2_order_action_container")[0]
             .get_text()
-            .find("Contract extension possible from")
+            .find("extend contract")
             == -1
             else False
         )
